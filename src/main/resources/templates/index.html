@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Community</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <!--<link rel="stylesheet" th:src="@{css/bootstrap.min.css}"  >-->
+    <!--<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}"  >-->
+    <!--<script th:src="@{js/bootstrap.min.js}"   type="application/javascript"></script>-->
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!--<link rel="stylesheet" href="/css/community.css">-->
+    <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Community</span>
             </button>
             <a class="navbar-brand" href="#">Community</a>
@@ -25,14 +32,17 @@
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/login/oauth/authorize?client_id=7b73765abcc2e93ac2c0&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我 <span class="caret"></span></a>
+                <li class="dropdown" th:if="${session.user !=null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false" th:text="${session.user.getLogin()}"> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息</a></li>
                         <li><a href="#">消息中心</a></li>
                         <li><a href="#">退出登录</a></li>
                     </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=7b73765abcc2e93ac2c0&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
                 </li>
             </ul>
         </div>

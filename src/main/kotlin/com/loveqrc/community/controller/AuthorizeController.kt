@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 class AuthorizeController {
@@ -26,7 +27,8 @@ class AuthorizeController {
 
     @GetMapping
     fun callback(@RequestParam(name = "code") code: String,
-                 @RequestParam(name = "state") state: String
+                 @RequestParam(name = "state") state: String,
+                 request: HttpServletRequest
     ): String {
         val tokenDto = AccessTokenDto(clientID,
                 clientSecret,
@@ -39,6 +41,7 @@ class AuthorizeController {
             val githubUser = githubProvider.getUser(accessToken)
             println(githubUser)
             return if (githubUser != null) {
+                request.session.setAttribute("user", githubUser)
                 "redirect:/"
             } else {
                 "redirect:/"
